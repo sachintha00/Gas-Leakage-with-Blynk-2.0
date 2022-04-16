@@ -1,9 +1,5 @@
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
-#include <FirebaseArduino.h>
-
-#define FIREBASE_HOST "iotgasleak-default-rtdb.firebaseio.com"
-#define FIREBASE_AUTH "2as8yvzXXCNksphHOZEwpU0DCC64Gyu2TgpxXRzC"
 
 #define BLYNK_TEMPLATE_ID "TMPLRKeXSJC9"
 #define BLYNK_DEVICE_NAME "IOT Course Work"
@@ -49,12 +45,10 @@ void getSensorData()
   //  Serial.println(analogRead(MQ2_SENSOR));
   if (MQ2_SENSOR_Value > 3 ) {
     //    Serial.println(MQ2_SENSOR_Value);
-    Firebase.setFloat("number", 4);
     digitalWrite(GREEN_LED, LOW);
     digitalWrite(RED_LED, HIGH);
   }
   else {
-    Firebase.setFloat("number", 3);
     digitalWrite(GREEN_LED, HIGH);
     digitalWrite(RED_LED, LOW);
   }
@@ -83,7 +77,6 @@ void setup()
   //  digitalWrite(WIFI_LED, HIGH);
   //
   WiFi.begin(ssid, pass);
-  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
     timer.setInterval(2000L, checkBlynkStatus); // check if Blynk server is connected every 2 seconds
     Blynk.config(auth);
   delay(1000);
